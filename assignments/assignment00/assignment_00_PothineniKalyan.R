@@ -3,7 +3,7 @@
 # Date: 2023-03-21
 
 # Basics
-
+sink("./assignment_00_PothineniKalyan.txt", append = T) #write output to a text file
 ## Add 8 and 5
 a <- 8
 b <- 5
@@ -59,3 +59,5 @@ class(z)
 
 ## Check the class of the variable class_name using the class() function
 class(class_name)
+
+sink()
