@@ -2,6 +2,8 @@
 # Name: POTHINENI, KALYAN
 # Date: 2010-02-14
 
+#sink("./assignment_01_PothineniKalyan.txt", append = T)
+
 ## Create a numeric vector with the values of 3, 2, 1 using the `c()` function
 ## Assign the value to a variable named `num_vector`
 ## Print the vector
@@ -149,3 +151,5 @@ head(sorted_characters_df, n=6)
 ringbearers_df <- characters_df[characters_df$ring_bearer == TRUE,]
 ## Use `head()` to output the first few rows of `ringbearers_df`
 head(ringbearers_df, n=6)
+
+#sink()
