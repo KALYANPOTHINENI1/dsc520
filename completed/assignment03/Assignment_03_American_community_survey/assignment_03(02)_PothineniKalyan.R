@@ -1,0 +1,52 @@
+# Assignment: ASSIGNMENT 3.2 (02)
+# Name: Pothineni, Kalyan
+# Date: 2023-03-29
+
+## Load the ggplot2 package
+library(ggplot2)
+theme_set(theme_minimal())
+
+## Set the working directory to the root of your DSC 520 directory
+setwd("C:/Users/kpothine/OneDrive - Waste Management/Documents/NDO_GIT/dsc520")
+
+## Load the `data/acs-14-1yr-s0201.csv` to
+us_census_df <- read.csv("data/acs-14-1yr-s0201.csv")
+
+## List the date frame
+list(us_census_df)
+
+## Structure of data frame
+str(us_census_df)
+
+## Number of rows in the data frame
+nrow(us_census_df)
+
+## Number of columns in the data frame
+ncol(us_census_df)
+
+## Histogram of the `HSDegree` variable using `geom_histogram()`
+ggplot(us_census_df, aes(HSDegree)) + geom_histogram( bins = 20)
+
+## Using `ggtitle()`, `xlab()`, and `ylab()` to add a title, x label, and y label to the previous plot
+## Title: HSGegree by population
+## X label: HSGegree percentage
+## Y Label: county count
+title <- 'HSGegree by population'
+x_lable <- 'HSGegree percentage'
+y_lable <- 'county count'
+ggplot(us_census_df, aes(HSDegree)) + geom_histogram( bins = 20) +
+  ggtitle(title) + labs(x_lable,  y_lable)
+
+## Probability plot
+HSDegree <- us_census_df$HSDegree
+HSDegree_sort <- sort(HSDegree, decreasing = FALSE)
+
+plot(x = HSDegree_sort, type= "l", 
+     xlab = "Density",
+     ylab = "HSGegree percentage",
+     main = "HSGegree by population"
+) 
+
+## stat.desc() 
+library (pastecs)
+stat.desc(us_census_df$HSDegree, basic=TRUE, desc=TRUE, norm=TRUE) 
