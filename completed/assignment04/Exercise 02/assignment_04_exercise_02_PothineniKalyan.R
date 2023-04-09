@@ -1,0 +1,120 @@
+# Assignment: ASSIGNMENT 4 Exercise -2
+# Name: Pothineni, Kalyan
+# Date: 2023-04-08
+
+## Load the `readxl` and 'dplyr library
+library(readxl)
+library(dplyr)
+library(plyr)
+
+setwd("C:/Users/kpothine/OneDrive - Waste Management/Documents/NDO_GIT/dsc520")
+dir()
+
+## Load the `data/acs-14-1yr-s0201.csv` to
+us_census_df <- read.csv("data/acs-14-1yr-s0201.csv")
+
+## Using the excel_sheets() function from the `readxl` package,
+## list the worksheets from the file `data/G04ResultsDetail2004-11-02.xls`
+housing_df <- read_excel('data/week-6-housing.xlsx', sheet = 'Sheet2')
+str(housing_df)
+head(housing_df)
+
+## Use the apply() function to calculate the median in the dataset
+median_prices <- apply(housing_df["Sale Price"], 2, median)
+median_prices
+
+median_bedrooms <- apply(housing_df["bedrooms"], 2, median)
+median_bedrooms
+
+## Use colnames() to change the column name
+colnames(housing_df)[colnames(housing_df)=="Sale Price"] <- "Sale_Price"
+
+colnames(housing_df)[colnames(housing_df)=="Sale Date"] <- "Sale_Date"
+
+## Use the aggregate() function to calculate the average sale price by year
+avg_price_by_year_built <- aggregate(Sale_Price ~ year_built, data = housing_df, mean)
+avg_price_by_year_built
+
+## Use the aggregate() function to calculate the average sale price by zip
+avg_price_by_zip <- aggregate(Sale_Price ~ zip5, data = housing_df, mean)
+avg_price_by_zip
+
+## try-2
+## Reference: https://www.r-bloggers.com/2018/07/how-to-aggregate-data-in-r/
+## Use aggregate() to calculate the average sale price by zip code
+avg_price_by_zip2 <- aggregate(housing_df$Sale_Price, by = list(housing_df$zip5), FUN = mean)
+avg_price_by_zip2
+
+## Rename the columns in the resulting dataframe
+colnames(avg_price_by_zip2) <- c("Zip", "Avg_Sale_Price")
+
+## Print the resulting dataframe
+print(avg_price_by_zip2)
+
+## Use ddply() to split the data by zip, calculate the average sale price, and combine the results
+avg_price_by_neighborhood <- ddply(housing_df, .(year_built), summarize, Avg_Sale_Price = mean(Sale_Price))
+
+## Print the resulting dataframe
+print(avg_price_by_neighborhood)
+
+## Distribution
+## Compute the summary statistics of Sale_Price variable
+summary(housing_df$Sale_Price)
+## Reference: https://www.geeksforgeeks.org/how-to-prevent-scientific-notation-in-r/
+## Set the scipen option to disable scientific notation
+options(scipen = 2)
+
+## create a histogram of the Sale_Price variable
+hist(housing_df$`Sale_Price`, xlab = "Sale Price")
+
+## create a box plot of the Sale Price variable in housing_df
+boxplot(housing_df$`Sale_Price`)
+
+## create a density plot of the Sale Price variable in housing_df
+plot(density(housing_df$`Sale_Price`))
+
+## create a normal probability plot of the Sale Price variable in housing_df
+qqnorm(housing_df$`Sale_Price`)
+qqline(housing_df$`Sale_Price`)
+
+## outliers
+## reference: https://www.r-bloggers.com/2020/01/how-to-remove-outliers-in-r/
+boxplot(housing_df$Sale_Price, horizontal = TRUE, main = "Boxplot of Sale Price")
+
+
+Q1 <- quantile(housing_df$Sale_Price, 0.15)
+Q2 <- quantile(housing_df$Sale_Price, 0.85)
+IQR <- Q2 - Q1
+
+lower_bound <- Q1 - 1.5*IQR
+upper_bound <- Q2 + 1.5*IQR
+
+outliers <- housing_df$Sale_Price[housing_df$Sale_Price < lower_bound | housing_df$Sale_Price > upper_bound]
+outliers
+
+## Filtering out the outliers from data frame
+housing_df_filtered <- housing_df %>% filter(Sale_Price >= lower_bound, Sale_Price <= upper_bound)
+housing_df_filtered
+
+## create new variables
+## Create a new variable called "price_per_sqft" by dividing the "Sale_Price" variable by the "sq_ft_lot" variable
+## total lot square feet
+housing_df$price_per_sqft <- housing_df$Sale_Price / housing_df$sq_ft_lot
+str(housing_df)
+## Filtered
+housing_df_filtered$price_per_sqft <- housing_df_filtered$Sale_Price / housing_df_filtered$sq_ft_lot
+str(housing_df_filtered)
+
+## total living square feet
+housing_df$price_per_living_sqft <- housing_df$Sale_Price / housing_df$square_feet_total_living
+str(housing_df)
+## Filtered
+housing_df_filtered$price_per_living_sqft <- housing_df_filtered$Sale_Price / housing_df_filtered$square_feet_total_living
+str(housing_df_filtered)
+
+## total bathrooms
+housing_df$total_bathrooms <- housing_df$bath_full_count + 0.5 * housing_df$bath_half_count + 0.25 * housing_df$bath_3qtr_count
+str(housing_df)
+## Filtered
+housing_df_filtered$total_bathrooms <- housing_df_filtered$bath_full_count + 0.5 * housing_df_filtered$bath_half_count + 0.25 * housing_df_filtered$bath_3qtr_count
+str(housing_df_filtered)
