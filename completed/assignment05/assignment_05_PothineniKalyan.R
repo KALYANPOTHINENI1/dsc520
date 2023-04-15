@@ -1,0 +1,175 @@
+# Assignment: ASSIGNMENT 5
+# Name: Pothineni, Kalyan
+# Date: 2023-04-15
+
+## Load the `readxl` and 'dplyr library
+library(readxl)
+library(dplyr)
+library(purrr)
+
+
+setwd("C:/Users/kpothine/OneDrive - Waste Management/Documents/NDO_GIT/dsc520")
+
+## Using the excel_sheets() function from the `readxl` package,
+## list the worksheets from the file `data/G04ResultsDetail2004-11-02.xls`
+housing_df <- read_excel('data/week-6-housing.xlsx', sheet = 'Sheet2')
+str(housing_df)
+##head(housing_df)
+
+## Use colnames() to change the column name
+colnames(housing_df)[colnames(housing_df)=="Sale Price"] <- "Sale_Price"
+
+colnames(housing_df)[colnames(housing_df)=="Sale Date"] <- "Sale_Date"
+##---------------------------------------------------------------------------------
+## Exercise 5.2 (a)
+##---------------------------------------------------------------------------------
+## Group by operation
+grouped_zon_df <- housing_df %>%
+  group_by(current_zoning) %>%
+  summarise(Total_value = sum(Sale_Price))
+
+grouped_zon_df
+
+## Group by operation
+grouped_sale_reason_df <- housing_df %>% group_by(sale_reason) %>%
+  summarise(mean_price = mean(Sale_Price), mean_size = mean(sq_ft_lot))
+
+grouped_sale_reason_df
+
+## Group by operation - cityname
+grouped_ctyname_df <- housing_df %>%
+  group_by(ctyname) %>%
+  summarise(mean_price = mean(Sale_Price), mean_size = mean(sq_ft_lot))
+grouped_ctyname_df
+
+
+## Summarize operation: calculate the average sales price and size of all houses
+summary_df <- housing_df %>%
+  summarise(avg_price = mean(Sale_Price), avg_size = mean(sq_ft_lot))
+summary_df
+
+## Mutate operation: add a new column for the price per square foot
+mutated_df <- housing_df %>%
+  mutate(price_per_sqft = Sale_Price / sq_ft_lot)
+str(mutated_df)
+
+## Filter operation: filter the data set to only include houses built after 1990
+filtered_df <- housing_df %>%
+  filter(year_built > 2000)
+##filtered_df
+nrow(filtered_df)
+
+## Select operation: select only the city and price columns
+selected_df <- housing_df %>%
+  select(ctyname, Sale_Price)
+str(selected_df)
+
+## Arrange operation: sort the data set by year built in ascending order
+arranged_df <- housing_df %>%
+  arrange(year_built)
+arranged_df
+
+## Arrange operation: sort the data set by year built in decending order
+arranged_desc_df <- housing_df %>%
+  arrange(desc(Sale_Price))
+arranged_desc_df
+
+##---------------------------------------------------------------------------------
+## Exercise 5.2 (b)
+##---------------------------------------------------------------------------------
+
+str(housing_df)
+# use the zip_n function to combine the columns into a list
+#zipped_list <- housing_df %>%
+#  select(building_grade, Sale_Price) %>%
+#  zip_n()
+
+
+zipped_list <- housing_df %>%
+  select(building_grade, Sale_Price) %>%
+  pmap(list) %>%
+  unname()
+
+zipped_list_ctyname <- housing_df %>%
+  select(ctyname, Sale_Price) %>%
+  pmap(list) %>%
+  unname()
+
+head(zipped_list, n=5)
+class(zipped_list)
+zipped_list[[2]]
+
+## Keep function to allow Sale_Price greater than 500000
+keep_list <- keep(zipped_list, ~ .x[[2]] > 500000)
+head(keep_list, n=5)
+
+keep_list_02 <- keep(zipped_list, ~ .x$Sale_Price > 1000000)
+head(keep_list_02, n=5)
+
+## discard function where building_grade is 7
+discard_list <- discard(zipped_list, ~ .x[[1]] == 7)
+head(discard_list, n=5)
+## discard function where building_grade is less than 9
+discard_list_02 <- discard(zipped_list, ~ .x$building_grade < 9)
+head(discard_list_02, n=5)
+## Clean the list with NA or blanks
+cleaned_list <- discard(zipped_list_ctyname, ~ is.na(.x$ctyname))
+head(cleaned_list, n=10)
+
+## compact function by removing all rows with NA values
+compact_list <- compact(keep_list_02)
+head(compact_list, n=10)
+
+##---------------------------------------------------------------------------------
+## Exercise 5.2 (c) Use the cbind and rbind function on your dataset
+##---------------------------------------------------------------------------------
+
+## Creating two new data frames to bind with housing_df
+new_df1 <- grouped_sale_reason_df
+
+new_df2 <- data.frame(sale_reason = c(30,40,50,60,70,80,90),
+                      mean_price = c(120,130,140,150,160,170,280), 
+                      mean_size = c(1,2,3,4,5,6,7))
+
+## Using rbind() to combine the housing_df with new_df1 and new_df2, basically a row binding
+combined_df <- rbind(new_df1, new_df2)
+print(combined_df)
+## Using cbind() to add a new column to the combined_df, basically a column binding
+new_col <- c('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X')
+combined_df <- cbind(combined_df, new_col)
+
+print(combined_df)
+
+##---------------------------------------------------------------------------------
+## Exercise 5.2 (d), Split a string, then concatenate the results back togethe
+##---------------------------------------------------------------------------------
+
+my_string <- "Splitting a string at a specific character"
+## split at space character
+my_list <- strsplit(my_string, " ")  
+print(my_list)
+
+## Reference: https://stackoverflow.com/questions/2247045/chopping-a-string-into-a-vector-of-fixed-width-character-elements
+## Splitting a string into fixed-width chunks
+my_string_02 <- "1234567890"
+my_list_02 <- strsplit(my_string_02, "(?<=\\G.{2})", perl = TRUE)
+print(my_list_02)
+
+
+## Splitting a string into fixed-width chunks
+my_string_03 <- "1234567890"
+sst <- strsplit(my_string_03, "")[[1]]
+paste0(sst[c(TRUE, FALSE)], sst[c(FALSE, TRUE)])
+
+## Concatenate chunks back together with a delimiter
+my_new_string <- paste(my_string_03, collapse = "-")
+print(my_new_string)
+
+##2
+# Split the string at the space character
+my_string_split <- strsplit(my_string, " ")[[1]]
+# Concatenate the split string back together with a hyphen
+my_string_concat <- paste(my_string_split, collapse = " ")
+# Print the result
+print(my_string_concat)
+##---------------------------------------------------------------------------------

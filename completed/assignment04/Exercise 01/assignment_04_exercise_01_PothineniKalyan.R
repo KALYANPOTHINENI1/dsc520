@@ -60,3 +60,4 @@ ggplot(data = sports_section, aes(x = "", y = Score)) +
 ggplot(data = regular_section, aes(x = "", y = Score)) +
   geom_boxplot(fill = "gray") +
   labs(title = "Distribution of Scores - Regular Section", y = "Score")
+
