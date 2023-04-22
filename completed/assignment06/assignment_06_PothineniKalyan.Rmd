@@ -1,0 +1,135 @@
+---
+title: "ASSIGNMENT 4"
+author: "Firstname Lastname"
+date: '2010-02-14'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+bibliography: bibliography.bib
+---
+
+# Markdown Basics
+
+__Headings__: Use # before text to create headings. The number of # corresponds to the heading level, with one # being the largest and six # being the smallest.
+
+__Text Emphasis__: Use * or _ to add emphasis to text. Single * or _ will italicize text, and double ** or __ will bold text.
+
+__Lists__: Use *, -, or + to create bullet point lists, and use numbers to create numbered lists.
+
+__Links__: To create a hyperlink, use square brackets [] to enclose the text you want to display, followed immediately by the URL in parentheses ().
+
+__Images__: To insert an image, use an exclamation mark ! followed by square brackets [] containing alt text, and then the image URL in parentheses ().
+
+__Code__: Use backticks ` to indicate inline code, and use triple backticks to indicate a code block
+
+## Favorite Foods
+
+- Sushi
+- Italian
+- Smoked Meat
+
+## Images
+![all cases (Log Plot)]("C:/Users/kpothine/OneDrive - Waste Management/Documents/NDO_GIT/dsc520/completed/assignment04/plots/10-all-cases-log.png")
+
+## Add a Quote
+
+> "Torture the data and it will confess to anything." - Ronald Coase
+
+## Add an Equation
+
+The Pythagorean theorem is expressed as `a^2 + b^2 = c^2`.
+
+$$a^2 + b^2 = c^2$$
+  
+## Add a Footnote
+^[R for Everyone]
+^[Discovering Statistics Using R]
+
+## Add Citations
+* R for Everyone [@lander2014r]
+* Discovering Statistics Using R* [@field2012discovering]
+
+# Inline Code
+```{r include = FALSE}
+library(ggplot2)
+theme_set(theme_minimal())
+
+## Load the `data/r4ds/heights.csv` to
+heights_df <- read.csv("data/r4ds/heights.csv")
+
+
+## Covid 19 dataset
+covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
+
+## Parse the date column using `as.Date()``
+covid_df$date <- as.Date(covid_df$date)
+
+## Create three dataframes named `california_df`, `ny_df`, and `florida_df`
+## containing the data from California, New York, and Florida
+
+california_df <- covid_df[ which( covid_df$state == "California"), ]
+ny_df <- covid_df[ which( covid_df$state == "New York"), ]
+florida_df <- covid_df[ which( covid_df$state == "Florida"), ]
+```
+
+## NY Times COVID-19 Data
+```{r echo = FALSE}
+library(ggplot2)
+library(dplyr)
+theme_set(theme_minimal())
+
+## Load the `data/r4ds/heights.csv` to
+covid_df <- read.csv("data/nytimes/covid-19-data/us-states.csv")
+
+## Parse the date column using `as.Date()``
+covid_df$date <- as.Date(covid_df$date)
+
+ny_df <- covid_df[ which( covid_df$state == "New York"), ]
+
+ggplot(data=ny_df, aes(x=date, y=cases, group=1)) + geom_line()
+
+```
+
+## R4DS Height vs Earnings
+```{r echo = FALSE}
+library(ggplot2)
+theme_set(theme_minimal())
+
+## Load the `data/r4ds/heights.csv` to
+heights_df <- read.csv("data/r4ds/heights.csv")
+
+## height vs. earn
+ggplot(heights_df, aes(x = height, y = earn)) + geom_point()
+```
+
+# Tables
+
+## Knitr Table with Kable
+```{r}
+library(knitr)
+library(pander)
+## The dataframe of the Lord of the Rings characters
+name <- c("Aragon", "Bilbo", "Frodo", "Galadriel", "Sam", "Gandalf", "Legolas",
+          "Sauron", "Gollum")
+race <- c("Men", "Hobbit", "Hobbit", "Elf", "Hobbit", "Maia", "Elf", "Maia",
+          "Hobbit")
+in_fellowship <- c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE)
+ring_bearer <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE)
+age <- c(88, 129, 51, 7000, 36, 2019, 2931, 7052, 589)
+
+characters_df <- data.frame(name, race, in_fellowship, ring_bearer, age)
+
+## Generate the table using kable function
+kable(characters_df, caption = "One Ring to Rule Them All")
+
+## Pandoc Table
+pandoc.table(characters_df, style = 'grid')
+```
+
+# References
+
+## References
+[1]: Lander, J. P. (2014). R for everyone: advanced analytics and graphics. Addison-Wesley Professional.
+
+[2]: Field, A., Miles, J., & Field, Z. (2012). Discovering statistics using R. Sage.
