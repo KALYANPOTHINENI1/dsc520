@@ -1,7 +1,7 @@
 ---
-title: "ASSIGNMENT 4"
-author: "Firstname Lastname"
-date: '2010-02-14'
+title: "assignment_06_PothineniKalyan"
+author: "Pothineni, Kalyan"
+date: '2023-04-23'
 output:
   pdf_document: default
   html_document: default
