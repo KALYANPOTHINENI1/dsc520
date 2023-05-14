@@ -1,0 +1,120 @@
+---
+title: "Assignment_09_PothineniKalyan"
+author: "PothineniKalyan"
+date: "2023-05-10"
+output: pdf_document
+---
+
+# Introduction
+
+  As electric vehicles become more predominant, it is essential to understand the characteristics and trends of the electric vehicle market. The sample data provides valuable insights into consumer/customer behavior, electric vehicle adoption rates, and potential policy interventions in Washington state.
+
+We will perform exploratory data analysis, cleansing, and modeling techniques to uncover patterns and trends in the electric vehicle market. It involves identifying car models and makes of popular electric vehicle types. Also, examine the relationship between electric range and consumer demand. Machine learning algorithms can be applied to predict future electric vehicle adoption and help policymaker's interventions to promote electric vehicle use in Washington state.
+
+For example, policymakers, electric vehicle manufacturers, and energy companies would be interested in this research as stakeholders. Electric vehicle manufacturers can use this information to design and market electric vehicles that meet the needs of consumers.
+
+Analysis of electric vehicle data is a significant data science problem with practical implications for various stakeholders. It requires the application of various data science techniques to uncover insights and trends in the market (electric vehicle market)
+
+## Research questions
+
+- How does the distribution of electric vehicles vary across different regions in Washington state, such as by county, city, or zip code?
+- What factors influence electric vehicle adoption in Washington state, such as incentives, availability of charging infrastructure, or demographic characteristics?
+- What is Washington State's current electric vehicle adoption rate, and how has it changed?
+- How does the availability and accessibility of electric vehicle charging infrastructure differ across different regions in Washington state
+- How does the adoption rate and usage pattern of electric vehicles in Washington state compare to other states with similar demographic and economic characteristics?
+- How do Washington State's electric vehicle policies and programs compare to other states?
+- What is the potential impact of increasing the electric vehicle adoption rate in Washington state on reducing greenhouse gas emissions and improving air quality?
+  
+
+## Approach
+
+  Plan to use various data science techniques to understand the characteristics and trends of the electric vehicle market. Specifically, we will first clean data, identify outliers and missing values, and create plots/visualizations to understand the distribution of different variables. Preprocess the data to ensure its quality and consistency. Then, we will analyze exploratory data to uncover patterns and trends related to adoption rates and consumer behavior in the electric vehicle market. Analysis can involve
+identifying which models and makes are most popular,
+understanding the distribution of electric vehicle types across different regions, and
+examining the relationship.
+
+Next, we will use machine learning algorithms to predict future electric vehicle adoption rates and help stakeholders design targeted interventions. Additionally, we will analyze the environmental and economic impacts of electric vehicle adoption, such as reductions in greenhouse gas emissions and potential cost savings. We will also examine the differences in electric vehicle adoption rates and usage patterns between rural and urban areas and investigate the potential impact of increasing electric vehicle adoption in Washington.
+
+## How the approach addresses (fully or partially) the problem.
+
+The approach will address the problem statement partially. It might only address some aspects of the problem statement but will provide valuable insights and potential environmental and economic impacts.
+
+- Identifying factors that influence electric vehicle adoption, such as demographic characteristics, incentives, and availability of charging infrastructure
+- Comparing electric vehicle adoption rates and usage patterns between different areas of Washington state
+- Conducting a comparative analysis of electric vehicle policies and programs in other states to identify best practices and lessons that we can learn from their experiences
+
+The proposed approach will provide partial insights and recommendations to policymakers, vehicle manufacturers, and energy companies on promoting electric vehicle adoption, reducing greenhouse gas emissions, and creating economic and social benefits in Washington State.
+
+## Data  (Minimum of 3 Datasets - but no requirement on the number of fields or rows)
+Below datasets are for Washington State 
+
+- Electric vehicle population data: https://catalog.data.gov/dataset/electric-vehicle-population-data
+- Electric Vehicle Title and Registration Activity: https://catalog.data.gov/dataset/electric-vehicle-title-and-registration-activity
+- Electric Vehicle Population Size History: https://catalog.data.gov/dataset/electric-vehicle-population-size-history
+- Electric Vehicle Population Size History By County: https://catalog.data.gov/dataset/electric-vehicle-population-size-history-by-county
+- WA Tax Exemptions - Potential Eligibility by Make/Model Excluding Vehicle Price Criteria: https://catalog.data.gov/dataset/wa-tax-exemptions-potential-eligibility-by-make-model-excluding-vehicle-price-criteria
+
+## Required Packages
+- tidyverse: for data cleaning, wrangling, and visualization
+- readxl: for reading Excel files
+- writexl: for writing data frames to Excel file
+- stats: for a Wide range of stats functions (linear regression, hypothesis testing)
+- dplyr: for data manipulation and summarization
+- purrr: functional data manipulation and to analyze multiple data frames
+- ppcor: to commute correlation, helpful in examining the relationship between variables
+- car: For regression analysis and model diagnostics
+- ggplot2: for creating high-quality and customizable visualizations
+- tidyr: for reshaping and tidying data
+- lubridate: for working with dates and times
+- maptools: for working with spatial data and creating maps
+
+Of course, other packages may be helpful depending on the specific analyses and modeling techniques used.
+
+## Plots and Table Needs
+
+Here are some possible plots and tables that could help illustrate the findings for each research question:
+
+> How does the distribution of electric vehicles vary across different regions in Washington state, such as by county, city, or zip code?
+
+- Plot: Map showing the number or percentage of electric vehicles registered in each county or city in Washington state, with different colors representing different ranges of values.
+- Table: Summary table of the number or percentage of electric vehicles registered in each county or city in Washington state.
+
+> What factors influence electric vehicle adoption in Washington state, such as incentives, availability of charging infrastructure, or demographic characteristics?
+
+- Plot: Scatter plot or bar chart showing the relationship between electric vehicle adoption rates and potential explanatory variables, such as incentives, availability of charging infrastructure, or demographic characteristics.
+- Table: Summary table of the correlation coefficients between electric vehicle adoption rates and potential explanatory variables, along with p-values and 95% confidence intervals.
+
+> What is Washington State's current electric vehicle adoption rate, and how has it changed?
+
+- Plot: Line plot showing the number or percentage of electric vehicles registered in Washington state by year, with separate lines for different vehicle types or regions.
+- Table: Summary table of the number or percentage of electric vehicles registered in Washington state by year, broken down by vehicle types or regions.
+
+> How do the availability and accessibility of electric vehicle charging infrastructure differ across different regions in Washington state?
+
+- Plot: Map showing the number or density of electric vehicle charging stations in each county or city in Washington state, with different colors representing different ranges of values.
+- Table: Summary table of the number or density of electric vehicle charging stations in each county or city in Washington state.
+
+> How does the adoption rate and usage pattern of electric vehicles in Washington state compare to other states with similar demographic and economic characteristics?
+
+- Plot: Bar chart or scatter plot showing the electric vehicle adoption rates or usage patterns in Washington state compared to other states with similar demographic and economic characteristics.
+- Table: Summary table of the electric vehicle adoption rates or usage patterns in Washington and other similar states, along with statistical tests for significant differences.
+
+> How do Washington State's electric vehicle policies and programs compare to other states?
+
+- Plot: Bar chart showing the key features or outcomes of Washington State's electric vehicle policies and programs compared to other states.
+- Table: Summary table of the critical features or outcomes of Washington State's electric vehicle policies and programs, along with those of other states.
+
+> What is the potential impact of increasing the electric vehicle adoption rate in Washington state on reducing greenhouse gas emissions and improving air quality?
+
+- Plot: Line plot showing the trend in greenhouse gas emissions or air quality in Washington state under different scenarios of increasing electric vehicle adoption rates.
+- Table: Summary table of the percentage reduction in greenhouse gas emissions or improvement in air quality in Washington state due to increasing electric vehicle adoption rates, broken down by different scenarios or time horizons.
+
+## Questions for future steps
+To answer the research questions, you may need to learn the following:
+
+- How to scrape data from various sources and merge datasets
+- How to perform spatial analysis and create maps to visualize the distribution of electric vehicles and charging infrastructure across different regions in Washington state
+- How to perform a regression analysis to identify factors that influence electric vehicle adoption rates
+- How to perform cluster analysis to group regions with similar electric vehicle adoption patterns
+- How to perform comparative analysis to compare Washington state's electric vehicle policies and programs to other states
+- How to estimate the potential impact of increasing electric vehicle adoption rates on reducing greenhouse gas emissions and improving air quality.
