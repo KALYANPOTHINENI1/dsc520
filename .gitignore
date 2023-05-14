@@ -37,3 +37,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+data/week-9/Electric_Vehicle_Population_Data.csv
+data/week-9/Electric_Vehicle_Population_Size_History.csv
+data/week-9/Electric_Vehicle_Population_Size_History_By_County.csv
+data/week-9/Electric_Vehicle_Title_and_Registration_Activity.csv
+data/week-9/WA_Tax_Exemptions_-_Potential_Eligibility_by_Make_Model_Excluding_Vehicle_Price_Criteria.csv
