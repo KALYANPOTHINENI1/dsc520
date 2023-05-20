@@ -43,7 +43,14 @@ summary(model)
 
 binary_df$label <- as.factor(binary_df$label)
 
+predictions <- ifelse(predict(model, type = 'response') >= 0.5, 1, 0)
 
+# Calculate the accuracy
+accuracy <- sum(predictions == binary_df$label) / nrow(data)
+accuracy
+
+# logistic regression model summary output definitions for reference in future
+# ref. https://towardsdatascience.com/simply-explained-logistic-regression-with-example-in-r-b919acb1d6b3
 ref. 
 Call: It shows the function call used to fit the model, including the formula, family, and data.
 
@@ -61,10 +68,3 @@ AIC: The Akaike Information Criterion (AIC) is a measure of the models goodness 
 
 Number of Fisher Scoring iterations: It shows the number of iterations performed by the fitting algorithm to estimate the coefficients.
 
-
-
-predictions <- ifelse(predict(model, type = 'response') >= 0.5, 1, 0)
-
-# Calculate the accuracy
-accuracy <- sum(predictions == binary_df$label) / nrow(data)
-accuracy

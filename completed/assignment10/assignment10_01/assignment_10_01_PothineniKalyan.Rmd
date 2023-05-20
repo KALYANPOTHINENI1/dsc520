@@ -11,8 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 10.2 Exercise 1
 
-# 1
-
 > Fit a binary logistic regression model to the data set that predicts whether or not the patient survived for one year (the Risk1Y variable) after the surgery. Use the glm() function to perform the logistic regression. See Generalized Linear Models for an example. Include a summary using the summary() function in your results.
 
 ```{r }
