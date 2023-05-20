@@ -1,0 +1,114 @@
+---
+title: "assignment_10_01_PothineniKalyan"
+author: "PothineniKalyan"
+date: "2023-05-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 10.2 Exercise 1
+
+# 1
+
+> Fit a binary logistic regression model to the data set that predicts whether or not the patient survived for one year (the Risk1Y variable) after the surgery. Use the glm() function to perform the logistic regression. See Generalized Linear Models for an example. Include a summary using the summary() function in your results.
+
+```{r }
+library(foreign)
+
+# Download and load the dataset
+# Library Foregin
+# ref.https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.arff.html
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00277/ThoraricSurgery.arff"
+download.file(url, "ThoracicSurgery.arff")
+thoracic_df <- read.arff("ThoracicSurgery.arff")
+
+# Rename the columns
+colnames(thoracic_df) <- c('DGN', 'PRE4', 'PRE5', 'PRE6', 'PRE7', 'PRE8', 'PRE9', 'PRE10',
+                  'PRE11', 'PRE14', 'PRE17', 'PRE19', 'PRE25', 'PRE30', 'PRE32', 'AGE', 'Risk1Y')
+
+# Convert non-numeric columns to factors
+thoracic_df$DGN <- as.factor(thoracic_df$DGN)
+thoracic_df$Risk1Y <- as.factor(thoracic_df$Risk1Y)
+
+
+# Fit a logistic regression model using 'glm
+model <- glm(Risk1Y ~ ., data = thoracic_df, family = binomial(link = "logit"))
+
+# Display the summary of the model
+summary(model)
+
+```
+
+According to the summary, which variables had the greatest effect on the survival rate?
+
+> To determine which variables had the greatest effect on the survival rate, we can look at the estimated coefficients of the logistic regression model. In the provided summary output, the "Coefficients" section displays the estimates, standard errors, z-values, and p-values for each predictor variable.
+
+> Variables with the significant effect on the survival rate typically have coefficients with a large magnitude (far from zero) and low p-values 
+
+> Based on the summary output we got, it seems that the variables "PRE9T" and "PRE14OC14" have the greatest effect on the survival rate. These variables have estimated coefficients of 1.368 and 1.653, respectively, which are relatively large compared to other variables. Additionally, their p-values are below the commonly used threshold of 0.05, indicating that these coefficients are statistically significant.
+
+To compute the accuracy of your model, use the dataset to predict the outcome variable. The percent of correct predictions is the accuracy of your model. What is the accuracy of your model?
+
+> To compute the accuracy of the logistic regression model, we need to compare the predicted outcomes (y_pred) with the actual outcomes in the dataset
+
+
+```{r }
+# Compute accuracy
+# Predict the outcome variable for the dataset
+y_pred <- predict(model, type = "response")
+
+# new vector, predicted probability in to binary values, with threshold of 0.5
+y_pred <- ifelse(y_pred >= 0.5, 1, 0)
+
+# Compute accuracy is caluclated by comparing predicted vs actual values
+accuracy <- mean(y_pred == thoracic_df$Risk1Y) * 100
+
+# Display the accuracy
+accuracy
+```
+> Accuracy of zero means that the model did not make any correct predictions. It indicates that the predicted values (y_pred) did not match the actual values (thoracic_df$Risk1Y) at all.
+
+> A zero accuracy can occur due to various reasons, such as a poorly trained or ill-fitted model, imbalance in the dataset, or incorrect implementation of the evaluation code
+
+> To check if the implementation of the evaluation code is wrong, lets compare the values and calculate the percentage of correct predictions. By calculating the accuracy in this way, we can ensure that we obtain the correct percentage of correct prediction made by the logistic regression model
+
+```{r }
+correct_predictions <- sum(y_pred == thoracic_df$Risk1Y)
+total_predictions <- length(y_pred)
+accuracy <- correct_predictions / total_predictions * 100
+
+# Print the accuracy
+# Print the accuracy
+print(paste("Accuracy:", accuracy))
+```
+
+# 2.Fit a Logistic Regrssion Model for binary classified data
+
+> To fit the Logistic Regrssion Model, we use 'glm()'
+
+```{r }
+# Read the dataset
+binary_df <- read.csv('data/binary-classifier-data.csv')
+
+# Fit the logistic regression model
+binary_model <- glm(label ~ x + y, data = binary_df, family = binomial)
+
+# Print the summary of the model
+summary(binary_model)
+```
+
+> Accuracy
+
+```{r }
+binary_predictions <- ifelse(predict(binary_model, type = 'response') >= 0.5, 1, 0)
+
+# Calculate the accuracy
+binary_accuracy <- sum(binary_predictions == binary_df$label) / nrow(binary_df)
+
+# Print the accuracy
+print(paste("Accuracy:", binary_accuracy))
+```
+> The accuracy of the logistic regression classifier on binary-classifier-data.csv dataset is approximately 0.5834, or 58.34%. This means that the classifier correctly predicted the label (0 or 1) for 58.34% of the instances in the dataset
